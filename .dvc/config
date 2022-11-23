@@ -1,5 +1,5 @@
 [core]
-    remote = guanaco
-['remote "guanaco"']
-    url = ssh://guanaco.inf.uach.cl
-    port = 22334
+    remote = quimal
+['remote "quimal"']
+    url = ssh://146.83.185.160:/home/shared/dvc-tutorial
+    port = 22
