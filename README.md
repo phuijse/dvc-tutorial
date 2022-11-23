@@ -151,7 +151,7 @@ For example:
 
     `dvc exp show`
 
-Presents a table with the results  commited to `main` andthe current head (`workspace`). The table includes the metrics, parameters and artifact versions.
+Presents a table with the results  commited to `main` and the current head (`workspace`). The table includes the metrics, parameters and artifact versions.
 
 You can run an experiment with:
 
@@ -159,13 +159,28 @@ You can run an experiment with:
 
 In this case we modified the DT hyperparameter `criterion` at run time. If you do `dvc exp show` again you will say the experiment under `main`
 
-We can set a queue of experiments using the `--queue` flag on `dvc exp run` and then calling
+We can set a queue of experiments using the `--queue` flag, for example
 
-    dvc exp run --run-all --jobs P
+    dvc exp run --set-param train.max_depth=1,10,100 --queue
 
-where `P` is the amount of parallel tasks
+**Note:** Parameters support ranges, in this case we have set three experiments in the queue. 
 
-Experiments are not tracked (non-permament). We can update our workspace with a particular experiment using `dvc exp apply` or we can create permament branches for an experiment with `dvc exp branch`. We can clean experiments with `dvc exp gc`. 
+**Note:** Several parameters can be changed calling the `--set-param` (`-S`) flag multiple times. We can do hyperparameter grid search with DVC in one line.
 
-**Note:** Experiments can be shared by pushing/pulling them to a remote
+Once we have filled the queue with our desired experiments we can run them with
+
+    dvc queue start --jobs P
+
+where `P` is the amount of parallel tasks. We can stop the processes with `dvc queue stop` and check if jobs have finished succesfully with `dvc queue status`.
+
+
+Experiments are not tracked (non-permament). At this point we should inspect which experiment came up better using `dvc exp show` and then we can either:
+
+- Update our workspace with a particular experiment using `dvc exp apply` and commit its results
+- Create a permament branch for an experiment with `dvc exp branch`. 
+
+Once we have commited the ones we are interested in, we can clean-up the rest with `dvc exp gc`. 
+
+**Note:** If you need to share the full set of experiments you can use `dvc exp push/pull`
+
 
