@@ -59,7 +59,7 @@ Example:
 
 DVC tracks artifacts by their MD5 hashes which are stored in a `.dvc` file. These files should be git tracked.
 
-## [Pulling and pushing data from/to cache and remote](https://dvc.org/doc/start/data-management/data-pipelines)
+## [Pulling and pushing data from/to cache and remote](https://dvc.org/doc/start/data-management/data-versioning#storing-and-sharing)
 
 Try removing a file from the `raw_data` and then calling [`dvc pull`](https://dvc.org/doc/command-reference/pull). Missing data is pulled from cache. If cache does not exists, e.g. a cleanly cloned repo, `dvc pull` will pull from the remote.
 
@@ -141,7 +141,7 @@ In general we want to iteratively improve our results by tuning and comparing mo
 
 **Note:** Metrics can be numerical tables and also plots, see the examples in the dvc documentation
 
-## Experiments 
+## [Experiment management](https://dvc.org/doc/start/experiment-management/experiments)
 
 An ML experiment in DVC is build from pipeline, parameter file and data artifacts. 
 
@@ -149,15 +149,15 @@ The commands for managing experiments start with `dvc exp`
 
 For example:
 
-    `dvc exp show`
+    dvc exp show
 
-Presents a table with the results  commited to `main` and the current head (`workspace`). The table includes the metrics, parameters and artifact versions.
+Presents a table with the results commited to `main` and the current head (`workspace`). The table includes the metrics, parameters and artifact versions.
 
 You can run an experiment with:
 
     dvc exp run --set-param train.criterion='entropy'
 
-In this case we modified the DT hyperparameter `criterion` at run time. If you do `dvc exp show` again you will say the experiment under `main`
+In this case we modified the DT hyperparameter `criterion` at run time. If you do `dvc exp show` again you will say the experiment under `main`.
 
 We can set a queue of experiments using the `--queue` flag, for example
 
@@ -165,9 +165,9 @@ We can set a queue of experiments using the `--queue` flag, for example
 
 **Note:** Parameters support ranges, in this case we have set three experiments in the queue. 
 
-**Note:** Several parameters can be changed calling the `--set-param` (`-S`) flag multiple times. We can do hyperparameter grid search with DVC in one line.
+**Note:** Several parameters can be changed calling the `--set-param` (or `-S` for short) flag multiple times. We can do hyperparameter grid search with DVC in one line.
 
-Once we have filled the queue with our desired experiments we can run them with
+Once we have filled the queue with our desired experiments we can run them with:
 
     dvc queue start --jobs P
 
